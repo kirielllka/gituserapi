@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% for repos in data %}
+    <div class="reposit">
+        <span class="name">Name:{{repos.name}}</span>
+        <span class="url">Url:{{repos.url}}</span>
+        <span class="stars">Stars:{{repos.stars}}</span> </div>
+    {% endfor %}
+
+    <script>
+        const repositElements = document.querySelectorAll('.reposit');
+
+repositElements.forEach(reposit => {
+    const starsSpan = reposit.querySelector('.stars');
+    const starCount = parseInt(starsSpan.textContent.split(':')[1]);
+
+    let starsHTML = '';
+    for (let i = 0; i < starCount; i++) {
+        starsHTML += '★'; // Add a star character (★)
+    }
+    starsSpan.innerHTML = starsHTML;
+});
+    </script>
+</body>
+<style>
+    .reposit {
+    word-wrap: break-word;
+    border: solid 1px black;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 200px;
+    width: 200px;
+    position: relative;
+    margin-right: 10px;
+    display: inline-flex;
+    padding: 10px;
+}
+
+.name {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.url {
+    overflow-wrap: break-word;
+    max-width: 180px;
+    margin-bottom: 10px;
+}
+
+
+</style>
+</html>

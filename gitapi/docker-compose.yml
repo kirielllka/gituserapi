@@ -1,0 +1,27 @@
+version: '3.9'
+
+services:
+  reddis:
+    image: redis:latest
+
+  web:
+    build: .
+    command: bash -c "PYTHONPATH=/app alembic upgrade head && python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./app
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE-gitapi.settings
+
+  celery:
+    build: .
+    command: bash -c "PYTHONPATH=/app celery -A gitapi worker -l info"
+    volumes:
+      - ./app
+    environment:
+      - DJANGO_SETTINGS_MODULE-gitapi.settings
+    depends_on:
+      - reddis
+
+
